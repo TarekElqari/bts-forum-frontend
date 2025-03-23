@@ -1,0 +1,15 @@
+<div class="slider-container rounded-3xl">
+    <div class="slider-wrapper" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+      <div *ngFor="let image of images" class="slider-item">
+        <img [src]="image" alt="Slide Image" />
+      </div>
+    </div>
+    
+    <div class="slider-dots">
+      <span *ngFor="let image of images; let i = index" 
+            class="dot" 
+            [class.active]="i === currentIndex" 
+            (click)="goToSlide(i)"></span>
+    </div>
+  </div>
+  

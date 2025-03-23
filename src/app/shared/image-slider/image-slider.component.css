@@ -1,0 +1,49 @@
+.slider-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%; /* Ensure the slider takes up the full width */
+    max-width: 600px; /* You can adjust this as per your layout */
+    margin: auto;
+  }
+  
+  .slider-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .slider-item {
+    min-width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .slider-item img {
+    width: 100%; /* Ensure the image fits the container width */
+    height: 100%; /* Ensure the image fits the container height */
+    object-fit: cover; /* Maintain the aspect ratio and cover the container */
+    display: block;
+  }
+  
+  .slider-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 1);
+    cursor: pointer;
+  }
+  
+  .dot.active {
+    background-color: #2158E1;
+  }
+  

@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+CU:wght@100..400&display=swap');
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: black;
+  font-family: 'Roboto', sans-serif;
+}
+
+.tropical {
+  color: #0F9E99;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
+.new-style {
+  font-family: 'Playwrite CU', sans-serif;
+}
+
+button {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.bg-cover {
+  background-size: cover;
+}
+
+.bg-center {
+  background-position: center;
+}
+
+@media (max-width: 768px) {
+  .text-lg {
+    font-size: 1rem;
+  }
+
+  .text-xl {
+    font-size: 1.25rem;
+  }
+
+  .text-4xl {
+    font-size: 2rem;
+  }
+
+  .text-2xl {
+    font-size: 1.25rem;
+  }
+
+  .welcome {
+    font-size: 0.875rem;
+  }
+
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-text {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  ul {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  nav {
+    background-color: white;
+    border-radius: 15px;
+    width: 80%;
+  }
+
+  ul li {
+    margin-bottom: 5px;
+  }
+
+  .inColap {
+    color: black;
+  }
+
+  .login {
+    color: black;
+    background-color: #09c2bc;
+  }
+
+  .loginColap {
+    margin-top: 12px;
+  }
+
+  .login:hover {
+    background-color: #29eee8;
+  }
+
+  .inColap:hover {
+    color: #0F9E99;
+  }
+
+  .logo{
+    border: white 3px dashed;
+  }
+  .inCol{
+    height: 50%;
+    width: 70%;
+    margin: auto;
+    border-radius: 0%;
+  }
+}
+
+.blue-text{
+  color: #29eee8;
+}
+
+
+@media (max-width: 768px) {
+  .features-section {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .features-section > section {
+    padding-bottom: 2rem;
+  }
+
+  .feature{
+    width: 60%;
+    margin: auto;
+    border-radius: 2%;
+  }
+
+.shapecol{
+  margin-top: 10px;
+}
+}
+
+.custom-auto-height {
+  height: auto !important;
+}
+@media (max-width: 768px) {
+  .custom-auto-height {
+      height: auto !important;
+  }
+}
+
+
+
+
+
