@@ -1,5 +1,16 @@
 {
-    "plugins": {
-      "@tailwindcss/postcss": {}
+  "plugins": {
+    "@tailwindcss/postcss": {
+      "config": {
+        "content": ["./src/**/*.{html,ts}"],
+        "theme": {
+          "extend": {
+            "boxShadow": {
+              "outline": "0 0 0 3px rgba(59, 130, 246, 0.5)"
+            }
+          }
+        }
+      }
     }
   }
+}

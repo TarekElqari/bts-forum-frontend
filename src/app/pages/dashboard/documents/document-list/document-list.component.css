@@ -1,0 +1,43 @@
+/* Animation for document cards */
+.border-gray-200 {
+    transition: all 0.3s ease;
+  }
+  
+  .border-gray-200:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  /* File type specific icons */
+  .fa-file-pdf { color: #F40F02; }
+  .fa-file-word { color: #2B579A; }
+  .fa-file-excel { color: #217346; }
+  .fa-file-powerpoint { color: #D24726; }
+  .fa-file-image { color: #26A269; }
+  .fa-file-alt { color: #6B7280; }
+  
+  /* Tag styling */
+  .bg-gray-100 {
+    transition: all 0.2s ease;
+  }
+  
+  .bg-gray-100:hover {
+    background-color: #e5e7eb;
+  }
+  
+  /* Button animations */
+  button {
+    transition: all 0.2s ease;
+  }
+  
+  button:hover {
+    transform: scale(1.05);
+  }
+.fixed {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }

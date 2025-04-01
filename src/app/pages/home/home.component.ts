@@ -57,4 +57,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
+
+  setOAuthIntent(intent: 'login' | 'signup') {
+    sessionStorage.setItem('oauthIntent', intent);
+  }
+  
 }

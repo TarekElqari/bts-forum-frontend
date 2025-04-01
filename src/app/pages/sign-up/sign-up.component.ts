@@ -119,7 +119,7 @@ toggleConfirmPasswordVisibility(): void {
       password: formValue.password,
       role: this.selectedRole
     };
-
+    console.log(payload);
     this.authService.register(payload).subscribe({
       next: (response) => {
         Swal.fire({

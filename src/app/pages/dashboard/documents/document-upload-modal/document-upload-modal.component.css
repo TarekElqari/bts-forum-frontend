@@ -1,0 +1,25 @@
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+  
+  /* Hover effects */
+  .hover-scale {
+    transition: transform 0.2s ease;
+  }
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+  
+  /* File icon colors based on type */
+  .fa-file-pdf { color: #F40F02; }
+  .fa-file-word { color: #2B579A; }
+  .fa-file-excel { color: #217346; }
+  .fa-file-powerpoint { color: #D24726; }
+  .fa-file-image { color: #26A269; }
+  .fa-file-alt { color: #6B7280; }

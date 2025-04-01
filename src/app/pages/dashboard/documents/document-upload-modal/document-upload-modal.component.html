@@ -1,0 +1,119 @@
+<div class="bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
+  <h3 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+    <i class="fas fa-cloud-upload-alt text-teal-600 mr-3"></i>
+    Ajouter un nouveau document
+  </h3>
+
+  <!-- Dropdowns Row -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    <!-- Matière Dropdown -->
+    <div class="relative">
+      <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+        <i class="fas fa-book mr-2 text-teal-600"></i> Matière
+      </label>
+      <select [(ngModel)]="matiere" (change)="onMatiereChange()" 
+              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200">
+        <option value="" disabled selected>Sélectionnez une matière</option>
+        <option value="Mathématiques">Mathématiques</option>
+        <option value="Physique">Physique</option>
+        <option value="Informatique">Informatique</option>
+        <option value="Chimie">Chimie</option>
+        <option value="Biologie">Biologie</option>
+        <option value="Autre">Autre</option>
+      </select>
+    </div>
+
+    <!-- Type de Document Dropdown -->
+    <div class="relative">
+      <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+        <i class="fas fa-file-alt mr-2 text-teal-600"></i> Type de document
+      </label>
+      <select [(ngModel)]="type" (change)="onTypeChange()" 
+              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200">
+        <option value="" disabled selected>Sélectionnez un type</option>
+        <option value="Examen">Examen</option>
+        <option value="Rapport de stage">Rapport de stage</option>
+        <option value="Exercice corrigé">Exercice corrigé</option>
+        <option value="Cours">Cours</option>
+        <option value="TD">Travaux Dirigés</option>
+        <option value="TP">Travaux Pratiques</option>
+        <option value="Autre">Autre</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Custom Matière Input -->
+  <div *ngIf="showCustomMatiere" class="mb-4 animate-fadeIn">
+    <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+      <i class="fas fa-pen mr-2 text-teal-600"></i> Précisez la matière
+    </label>
+    <input [(ngModel)]="customMatiere" placeholder="Entrez le nom de la matière" 
+           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200">
+  </div>
+
+  <!-- Custom Type Input -->
+  <div *ngIf="showCustomType" class="mb-4 animate-fadeIn">
+    <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+      <i class="fas fa-pen mr-2 text-teal-600"></i> Précisez le type de document
+    </label>
+    <input [(ngModel)]="customType" placeholder="Entrez le type de document" 
+           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200">
+  </div>
+
+  <!-- Drag & Drop File Input -->
+  <div *ngIf="!file"
+       class="w-full border-2 border-dashed border-gray-300 rounded-lg p-8 flex flex-col items-center justify-center text-gray-500 cursor-pointer mb-4 hover:border-teal-500 hover:bg-gray-50 transition duration-300"
+       (drop)="onDrop($event)" 
+       (dragover)="onDragOver($event)"
+       (dragleave)="onDragLeave($event)"
+       (click)="triggerFileSelect()">
+    <i class="fas fa-file-upload text-4xl mb-3 text-teal-600 animate-bounce"></i>
+    <p class="text-center text-lg">
+      Glissez et déposez un fichier ici<br>
+      <span class="text-teal-600 font-medium underline mt-2 inline-block">
+        <i class="fas fa-search mr-1"></i> ou cliquez pour sélectionner
+      </span>
+    </p>
+    <input type="file" class="hidden" #fileInput (change)="onFileSelected($event)">
+  </div>
+
+  <!-- File Preview -->
+  <div *ngIf="file" class="mt-4 text-sm text-gray-700 bg-gray-100 p-4 rounded-lg border border-gray-300 flex items-center justify-between animate-fadeIn">
+    <div class="flex items-center">
+      <i class="fas fa-file-pdf text-2xl text-red-500 mr-3"></i>
+      <div>
+        <p class="font-semibold">{{ file.name }}</p>
+        <p class="text-xs text-gray-500">Taille : {{ (file.size / 1024).toFixed(1) }} KB</p>
+      </div>
+    </div>
+    <button (click)="removeFile()" class="text-red-500 hover:text-red-700 text-sm font-semibold transition duration-200">
+      <i class="fas fa-trash-alt mr-1"></i> Supprimer
+    </button>
+  </div>
+
+  <!-- Tags -->
+  <div class="mt-6">
+    <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+      <i class="fas fa-tags mr-2 text-teal-600"></i> Tags
+    </label>
+    <input [(ngModel)]="tagsInput" placeholder="Tags (séparés par des virgules)" 
+           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200">
+  </div>
+  
+  <!-- Description -->
+  <div class="mt-4">
+    <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+      <i class="fas fa-align-left mr-2 text-teal-600"></i> Description
+    </label>
+    <textarea [(ngModel)]="description" placeholder="Description du document" rows="3" 
+              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200"></textarea>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="mt-6 text-right">
+    <button (click)="upload()" 
+            class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 shadow-md hover:shadow-lg">
+      <i class="fas fa-upload mr-2"></i> Ajouter le document
+    </button>
+  </div>
+</div>

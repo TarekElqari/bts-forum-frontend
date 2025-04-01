@@ -13,8 +13,11 @@ export class StudOrTeachComponent {
   constructor(private router: Router) {}
 
   selectRole(role: 'STUDENT' | 'TEACHER') {
-    this.router.navigate(['/signup'], {
-      queryParams: { role }
-    });
+    const intent = sessionStorage.getItem('oauthIntent') || 'signup';
+    if (intent === 'login') {
+      this.router.navigate(['/login']);
+    } else {
+      this.router.navigate(['/signup'], { queryParams: { role } });
+    }
   }
 }

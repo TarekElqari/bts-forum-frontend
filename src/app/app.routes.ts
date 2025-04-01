@@ -4,6 +4,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/sign-up/sign-up.component';
 import { StudOrTeachComponent } from './pages/stud-or-teach/stud-or-teach.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DocsHome } from './pages/dashboard/documents/docs-home/docs-home.component';
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent},

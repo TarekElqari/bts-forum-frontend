@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { LoginRequest } from '../../models/auth/login-request.model';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private http: HttpClient
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -40,10 +42,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.autoSlideInterval = setInterval(() => this.nextSlide(), 4000);
-    const currentUrl = window.location.href;
-    if (currentUrl.includes('jwt')) {
-      this.authService.handleOAuth2Response(currentUrl);
-    }
   }
 
   ngOnDestroy(): void {
@@ -103,9 +101,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   nextSlide(): void {
     this.currentSlide = (this.currentSlide + 1) % this.slides.length;
-  }
-  googleLogin() {
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
   }
 }
 
