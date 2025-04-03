@@ -8,6 +8,18 @@
   color: #EF4444;
 }
 
+.fa-circle {
+  color: #d1d5db; /* gray-300 */
+}
+
+.text-green-500 {
+  color: #4BAB50;
+}
+
+.text-red-500 {
+  color: #EF4444;
+}
+
 
   button.iti__selected-country {
     /* Specify the styles you want to override */ /* Reset background */

@@ -1,0 +1,39 @@
+/* Password strength indicators */
+.text-green-500 {
+    color: #10b981;
+  }
+  
+  .text-red-500 {
+    color: #ef4444;
+  }
+  
+  /* Modal styles */
+  .fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+  }
+  
+  .bg-opacity-50 {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Transition effects */
+  .transition {
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  input[type="password"]::-ms-reveal,
+  input[type="password"]::-ms-clear {
+    display: none;
+  }
+  
+  input[type="password"] {
+    -webkit-text-security: none;
+  }
+  

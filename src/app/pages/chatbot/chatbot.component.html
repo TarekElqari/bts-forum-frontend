@@ -1,0 +1,71 @@
+<div class="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-6">
+  <!-- Chat Container -->
+  <div class="w-full max-w-5xl bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 flex flex-col overflow-hidden relative transition-all duration-300">
+
+    <!-- Header -->
+    <div class="flex items-center space-x-4 p-5 border-b border-gray-700 bg-gray-800/90 backdrop-blur-md">
+      <div class="w-12 h-12 bg-teal-700/30 flex items-center justify-center rounded-full">
+        <i class="fas fa-robot text-teal-400 text-2xl"></i>
+      </div>
+      <div>
+        <h2 class="text-lg font-bold">Assistant TC</h2>
+        <p class="text-xs text-teal-400">Disponible & prêt à aider</p>
+      </div>
+      <select [(ngModel)]="selectedMode" class="ml-auto bg-gray-700 text-white rounded-lg px-3 py-1 text-sm">
+        <option value="default">Standard</option>
+        <option value="resumeMode">Résumé</option>
+        <option value="explainMode">Explication</option>
+        <option value="stageAdvices">Conseils Stage</option>
+        <option value="examQuestions">Questions Exam</option>
+      </select>
+      <button (click)="clearConversation()" class="ml-3 text-gray-400 hover:text-red-400">
+        <i class="fas fa-trash-alt"></i>
+      </button>
+    </div>
+
+    <!-- Chat Messages -->
+    <div id="chatContainer" class="flex-1 p-6 space-y-4 overflow-y-auto bg-gray-900/80 scroll-smooth">
+      <div *ngFor="let msg of messages" class="flex group relative" [ngClass]="{'justify-end': msg.sender === 'user'}">
+        <div [ngClass]="msg.sender === 'bot' ? 'bg-gray-700 text-left' : 'bg-teal-600 text-right'"
+             class="px-4 py-3 rounded-xl max-w-xl leading-relaxed shadow-sm relative">
+          <p>{{ msg.displayedContent }}</p>
+        </div>
+        <button *ngIf="msg.sender === 'bot'" 
+                (click)="copyMessage(msg.content)" 
+                class="absolute top-0 right-0 text-gray-400 hover:text-teal-400 opacity-0 group-hover:opacity-100 transition p-2">
+          <i class="fas fa-copy"></i>
+        </button>
+      </div>
+      <div *ngIf="isGenerating" class="flex items-center space-x-2 text-gray-400 animate-pulse">
+        <i class="fas fa-ellipsis-h text-lg"></i>
+        <span>Assistant TC écrit...</span>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <form (submit)="sendMessage()" class="flex items-center p-4 border-t border-gray-700 bg-gray-800/90 backdrop-blur-md space-x-3">
+      <input type="text" [(ngModel)]="userMessage" name="userMessage"
+             [disabled]="isGenerating"
+             class="flex-1 bg-gray-700 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+             placeholder="Posez votre question ici...">
+      <button type="submit"
+              [disabled]="isGenerating || !userMessage.trim()"
+              class="bg-teal-600 hover:bg-teal-500 px-5 py-3 rounded-lg transition shadow-md flex items-center">
+        <i class="fas fa-paper-plane mr-2"></i>
+        <span *ngIf="!isGenerating">Envoyer</span>
+        <i *ngIf="isGenerating" class="fas fa-spinner animate-spin"></i>
+      </button>
+      <button *ngIf="isGenerating" (click)="stopGeneration()" type="button"
+              class="bg-red-600 hover:bg-red-500 px-3 py-3 rounded-lg transition shadow-md">
+        <i class="fas fa-stop"></i>
+      </button>
+      <button *ngIf="!isGenerating && lastUserMessage" (click)="regenerate()" type="button"
+              class="bg-yellow-500 hover:bg-yellow-400 px-3 py-3 rounded-lg transition shadow-md">
+        <i class="fas fa-sync-alt"></i>
+      </button>
+    </form>
+  </div>
+
+  <!-- Footer Hint -->
+  <p class="text-s text-gray-500 mt-4 text-center">Assistant TC peut faire des erreurs. Envisagez de vérifier les informations importantes..</p>
+</div>

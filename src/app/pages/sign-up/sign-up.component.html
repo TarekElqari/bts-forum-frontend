@@ -4,163 +4,197 @@
   <!-- Background Overlay -->
   <div class="absolute inset-0 bg-opacity-20"></div>
 
-  <!-- Card Section (Smaller & Centered) -->
+  <!-- Card Section -->
   <div class="relative bg-white rounded-lg shadow-lg w-full max-w-xl p-8">
       
-      <!-- Logo -->
-      <div class="text-center mb-4">
-        <a href="/home">
-          <img src="logo-TC.webp" alt="Logo BTS TC" class="rounded-full mx-auto h-16 w-16 sm:h-18 sm:w-18">
-        </a>
+    <!-- Logo -->
+    <div class="text-center mb-4">
+      <a href="/home">
+        <img src="logo-TC.webp" alt="Logo BTS TC" 
+             class="rounded-full mx-auto h-16 w-16 sm:h-18 sm:w-18">
+      </a>
+    </div>
+
+    <!-- Title -->
+    <h1 class="text-2xl font-semibold text-gray-900 text-center">Créer un compte</h1>
+    <p class="mt-2 text-center text-gray-600">
+      Vous avez déjà un compte ? 
+      <a href="/login" class="text-[#0F9E99] hover:text-[#0C7A76] font-medium">
+        Connectez-vous ici
+      </a>
+    </p>
+
+    <!-- Sign-Up Form -->
+    <form class="space-y-4 mt-6" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      
+      <!-- First Name -->
+      <div class="relative">
+        <i class="fa-solid fa-user absolute top-1/2 left-4 transform -translate-y-1/2 text-[#0F9E99]"></i>
+        <input
+          id="firstName"
+          type="text"
+          formControlName="firstName"
+          required
+          class="block w-full px-4 py-2 pl-12 border border-gray-300 rounded-md placeholder-gray-500 focus:ring-[#0F9E99] focus:border-[#0F9E99]"
+          placeholder="Prénom"
+        />
       </div>
 
-      <!-- Title -->
-      <h1 class="text-2xl font-semibold text-gray-900 text-center">Créer un compte</h1>
-      <p class="mt-2 text-center text-gray-600">
-        Vous avez déjà un compte ? 
-        <a href="/login" class="text-[#0F9E99] hover:text-[#0C7A76] font-medium">
-          Connectez-vous ici
-        </a>
-      </p>
+      <!-- Last Name -->
+      <div class="relative">
+        <i class="fa-solid fa-user absolute top-1/2 left-4 transform -translate-y-1/2 text-[#0F9E99]"></i>
+        <input
+          id="lastName"
+          type="text"
+          formControlName="lastName"
+          required
+          class="block w-full px-4 py-2 pl-12 border border-gray-300 rounded-md placeholder-gray-500 focus:ring-[#0F9E99] focus:border-[#0F9E99]"
+          placeholder="Nom"
+        />
+      </div>
 
-      <!-- Sign-Up Form -->
-      <form class="space-y-4 mt-6" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-        
-        <!-- First Name -->
+      <!-- Email -->
+      <div class="relative">
+        <i class="fa-solid fa-envelope absolute top-1/2 left-4 transform -translate-y-1/2 text-[#0F9E99]"></i>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          required
+          class="block w-full px-4 py-2 pl-12 border border-gray-300 rounded-md placeholder-gray-500 focus:ring-[#0F9E99] focus:border-[#0F9E99]"
+          placeholder="E-mail"
+        />
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label for="password" class="sr-only">Mot de passe</label>
         <div class="relative">
-          <i class="fa-solid fa-user absolute top-1/2 left-4 transform -translate-y-1/2 text-[#0F9E99]"></i>
           <input
-            id="firstName"
-            type="text"
-            formControlName="firstName"
+            id="password"
+            name="password"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
             required
-            class="block w-full px-4 py-2 pl-12 border border-gray-300 rounded-md placeholder-gray-500 focus:ring-[#0F9E99] focus:border-[#0F9E99]"
-            placeholder="Prénom"
+            class="appearance-none rounded-md block w-full px-3 py-2 pr-12 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#0F9E99] focus:border-[#0F9E99] sm:text-sm"
+            placeholder="Mot de passe"
           />
+          <button
+            type="button"
+            (click)="togglePasswordVisibility()"
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-[#0F9E99] focus:outline-none"
+            aria-label="Afficher ou masquer le mot de passe"
+          >
+            <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </button>
         </div>
 
-        <!-- Last Name -->
-        <div class="relative">
-          <i class="fa-solid fa-user absolute top-1/2 left-4 transform -translate-y-1/2 text-[#0F9E99]"></i>
-          <input
-            id="lastName"
-            type="text"
-            formControlName="lastName"
-            required
-            class="block w-full px-4 py-2 pl-12 border border-gray-300 rounded-md placeholder-gray-500 focus:ring-[#0F9E99] focus:border-[#0F9E99]"
-            placeholder="Nom"
-          />
-        </div>
-        <!-- Email -->
-        <div class="relative">
-          <i class="fa-solid fa-envelope absolute top-1/2 left-4 transform -translate-y-1/2 text-[#0F9E99]"></i>
-          <input
-            id="email"
-            type="email"
-            formControlName="email"
-            required
-            class="block w-full px-4 py-2 pl-12 border border-gray-300 rounded-md placeholder-gray-500 focus:ring-[#0F9E99] focus:border-[#0F9E99]"
-            placeholder="E-mail"
-          />
-        </div>
-
-        <!-- Password -->
-        <!-- Password -->
-        <div>
-          <label for="password" class="sr-only">Mot de passe</label>
-          <div class="relative">
-            <input
-              id="password"
-              name="password"
-              [type]="showPassword ? 'text' : 'password'"
-              formControlName="password"
-              required
-              class="appearance-none rounded-md block w-full px-3 py-2 pr-12 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#0F9E99] focus:border-[#0F9E99] sm:text-sm"
-              placeholder="Mot de passe"
-            />
-        
-            <!-- 👇 Bouton toggle -->
-            <button
-              type="button"
-              (click)="togglePasswordVisibility()"
-              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-[#0F9E99] focus:outline-none"
-              aria-label="Afficher ou masquer le mot de passe"
-            >
-              <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
-            </button>
+        <!-- Password Strength Indicators -->
+        <div class="mt-2 space-y-1 text-sm" *ngIf="showPasswordStrength">
+          <div class="flex items-center gap-2">
+            <i class="fas text-gray-400"
+               [ngClass]="{
+                 'fa-check-circle text-green-500': hasLength,
+                 'fa-times-circle text-red-500': !hasLength,
+                 'fa-circle': !hasLength && !signupForm.get('password')?.dirty
+               }"></i>
+            <span>Entre 8 et 16 caractères</span>
           </div>
-        
-          <!-- Indicateurs de sécurité -->
-          <div class="mt-2 space-y-1 text-sm text-gray-500" *ngIf="showPasswordStrength">
-            <div [class]="hasLength ? 'text-green-500' : 'text-gray-500'">
-              <i [class]="hasLength ? 'fa fa-check-circle' : 'fa fa-circle'"></i> Entre 8 et 16 caractères
-            </div>
-            <div [class]="hasUpper ? 'text-green-500' : 'text-gray-500'">
-              <i [class]="hasUpper ? 'fa fa-check-circle' : 'fa fa-circle'"></i> Une lettre majuscule [A-Z]
-            </div>
-            <div [class]="hasLower ? 'text-green-500' : 'text-gray-500'">
-              <i [class]="hasLower ? 'fa fa-check-circle' : 'fa fa-circle'"></i> Une lettre minuscule [a-z]
-            </div>
-            <div [class]="hasNumber ? 'text-green-500' : 'text-gray-500'">
-              <i [class]="hasNumber ? 'fa fa-check-circle' : 'fa fa-circle'"></i> Un chiffre
-            </div>
-            <div [class]="hasSpecial ? 'text-green-500' : 'text-gray-500'">
-              <i [class]="hasSpecial ? 'fa fa-check-circle' : 'fa fa-circle'"></i> Un caractère spécial [!&#64;#$%^&*.]
-            </div>
+          <div class="flex items-center gap-2">
+            <i class="fas text-gray-400"
+               [ngClass]="{
+                 'fa-check-circle text-green-500': hasUpper,
+                 'fa-times-circle text-red-500': !hasUpper,
+                 'fa-circle': !hasUpper && !signupForm.get('password')?.dirty
+               }"></i>
+            <span>Une lettre majuscule [A-Z]</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i class="fas text-gray-400"
+               [ngClass]="{
+                 'fa-check-circle text-green-500': hasLower,
+                 'fa-times-circle text-red-500': !hasLower,
+                 'fa-circle': !hasLower && !signupForm.get('password')?.dirty
+               }"></i>
+            <span>Une lettre minuscule [a-z]</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i class="fas text-gray-400"
+               [ngClass]="{
+                 'fa-check-circle text-green-500': hasNumber,
+                 'fa-times-circle text-red-500': !hasNumber,
+                 'fa-circle': !hasNumber && !signupForm.get('password')?.dirty
+               }"></i>
+            <span>Un chiffre</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i class="fas text-gray-400"
+               [ngClass]="{
+                 'fa-check-circle text-green-500': hasSpecial,
+                 'fa-times-circle text-red-500': !hasSpecial,
+                 'fa-circle': !hasSpecial && !signupForm.get('password')?.dirty
+               }"></i>
+            <span>Un caractère spécial [!&#64;#$%^&*(),.?":&#123;&#125;|<>]</span>
           </div>
         </div>
-        
+      </div>
 
-<!-- Confirm Password -->
-<div>
-  <label for="confirm-password" class="sr-only">Confirmer le mot de passe</label>
-  <div class="relative">
-    <input
-      id="confirm-password"
-      name="confirmPassword"
-      [type]="showConfirmPassword ? 'text' : 'password'"
-      formControlName="confirmPassword"
-      required
-      class="appearance-none rounded-md block w-full px-3 py-2 pr-12 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#0F9E99] focus:border-[#0F9E99] sm:text-sm"
-      placeholder="Confirmer le mot de passe"
-    />
-    <button
-      type="button"
-      (click)="toggleConfirmPasswordVisibility()"
-      class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-[#0F9E99] focus:outline-none"
-      aria-label="Afficher ou masquer le mot de passe"
-    >
-      <i class="fas" [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
-    </button>
-  </div>
+      <!-- Confirm Password -->
+      <div>
+        <label for="confirm-password" class="sr-only">Confirmer le mot de passe</label>
+        <div class="relative">
+          <input
+            id="confirm-password"
+            name="confirmPassword"
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            formControlName="confirmPassword"
+            required
+            class="appearance-none rounded-md block w-full px-3 py-2 pr-12 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#0F9E99] focus:border-[#0F9E99] sm:text-sm"
+            placeholder="Confirmer le mot de passe"
+          />
+          <button
+            type="button"
+            (click)="toggleConfirmPasswordVisibility()"
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-[#0F9E99] focus:outline-none"
+            aria-label="Afficher ou masquer le mot de passe"
+          >
+            <i class="fas" [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </button>
+        </div>
 
-  <p *ngIf="startPasswordMatchCheck" class="text-sm mt-1"
-     [class.text-green-500]="passwordsMatch"
-     [class.text-red-500]="!passwordsMatch">
-    {{ passwordsMatch ? 'Les mots de passe correspondent' : 'Les mots de passe ne correspondent pas' }}
-  </p>
-</div>
+        <!-- Password Match Indicator -->
+        <p *ngIf="startPasswordMatchCheck" class="text-sm mt-1 flex items-center gap-2">
+          <i class="fas"
+             [ngClass]="{
+               'fa-check-circle text-green-500': passwordsMatch,
+               'fa-times-circle text-red-500': !passwordsMatch
+             }"></i>
+          {{ passwordsMatch ? 'Les mots de passe correspondent' : 'Les mots de passe ne correspondent pas' }}
+        </p>
+      </div>
 
-<div class="relative">
-  <i class="fa-solid fa-building-columns absolute top-1/2 left-4 transform -translate-y-1/2 text-[#0F9E99]"></i>
-  <select
-    id="classe"
-    formControlName="classe"
-    required
-    class="block w-full px-4 py-2 pl-12 border border-gray-300 rounded-md bg-white text-gray-700 focus:ring-[#0F9E99] focus:border-[#0F9E99]"
-  >
-    <option value="" disabled selected hidden>Choisissez votre classe</option>
-    <option value="TC-1ere annee">TC-1ere année</option>
-    <option value="TC-2eme annee">TC-2eme année</option>
-  </select>
-</div>
-        <!-- Submit Button -->
-        <button
-          type="submit"
-          class="w-full py-2 bg-[#0F9E99] text-white rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out focus:ring-4 focus:ring-[#0C7A76] focus:outline-none font-medium"
+      <!-- Class Selection -->
+      <div class="relative">
+        <i class="fa-solid fa-building-columns absolute top-1/2 left-4 transform -translate-y-1/2 text-[#0F9E99]"></i>
+        <select
+          id="classe"
+          formControlName="classe"
+          required
+          class="block w-full px-4 py-2 pl-12 border border-gray-300 rounded-md bg-white text-gray-700 focus:ring-[#0F9E99] focus:border-[#0F9E99]"
         >
-          S'inscrire
-        </button>
-      </form>
+          <option value="" disabled selected hidden>Choisissez votre classe</option>
+          <option value="TC-1ere annee">TC-1ere année</option>
+          <option value="TC-2eme annee">TC-2eme année</option>
+        </select>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="w-full py-2 bg-[#0F9E99] text-white rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out focus:ring-4 focus:ring-[#0C7A76] focus:outline-none font-medium"
+      >
+        S'inscrire
+      </button>
+    </form>
   </div>
 </div>

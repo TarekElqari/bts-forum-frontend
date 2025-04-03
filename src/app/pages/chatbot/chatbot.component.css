@@ -1,0 +1,64 @@
+#chatContainer {
+    max-height: 500px;
+    scroll-behavior: smooth;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #4fd1c5;
+    border-radius: 10px;
+  }
+  
+  #chatContainer::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  #chatContainer::-webkit-scrollbar-thumb {
+    background-color: #14b8a6;
+    border-radius: 6px;
+  }
+  
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .copy-btn {
+    background: transparent;
+    color: #9ca3af;
+    font-size: 14px;
+    margin-top: 4px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .copy-btn:hover {
+    color: #14b8a6;
+  }
+  #chatContainer {
+    max-height: 500px;
+    scroll-behavior: smooth;
+  }
+  
+  .group:hover .copy-btn {
+    opacity: 1;
+  }
+  
+  .copy-btn {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  select {
+    background: #374151;
+    border: none;
+  }
+  

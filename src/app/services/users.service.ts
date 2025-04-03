@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserDto } from '../models/etudiant/user.model';
+import { UserDto } from '../models/shared-models/user.model';
 
 
 @Injectable({
@@ -19,4 +19,14 @@ export class UserService {
   getAllUsers(): Observable<UserDto[]> {
     return this.http.get<UserDto[]>(this.baseUrl);
   }
+  updateUser(id: number, user: UserDto): Observable<UserDto> {
+    return this.http.put<UserDto>(`${this.baseUrl}/${id}`, user);
+  }
+  changePassword(userId: number, currentPassword: string, newPassword: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${userId}/change-password`, {
+      currentPassword,
+      newPassword
+    });
+  }
+
 }

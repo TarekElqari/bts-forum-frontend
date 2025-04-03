@@ -6,6 +6,7 @@ export interface DocumentDto {
     uploadDateTime: string;
     description: string;
     matiere: string;
+    niveau: string;
     type: string; 
     uploadedBy: UploadedByDto;
   }

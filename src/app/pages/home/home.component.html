@@ -1,5 +1,5 @@
 <div class="min-h-screen flex flex-col">
-  <nav class="bg-white dark:bg-white fixed top-5 left-1/2 transform -translate-x-1/2 z-20 w-[90%] max-w-4xl rounded-full shadow-2xl shadow-teal-600/100">
+  <nav class="bg-white dark:bg-white fixed top-5 left-1/2 transform -translate-x-1/2 z-20 w-[90%] max-w-4xl rounded-full shadow-xl shadow-teal-600/50">
       <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="/home" class="flex items-center space-x-3 rtl:space-x-reverse hover:scale-105 transition-transform">
           <img src="logo-TC.webp" class="h-12 w-12 rounded-full logo" alt="Logo TC-Forum">
@@ -58,7 +58,7 @@
 
   
     <!-- Section des fonctionnalités -->
-  <div class="features-section bg-black h-[80vh] grid grid-cols-2 gap-8 items-center" id="benefits">
+  <div class="features-section bg-black h-[80vh] grid grid-cols-2 gap-8 items-center scroll-mt-42" id="benefits">
     <!-- Section gauche -->
     <section class="bg-white dark:bg-black h-full flex items-center">
       <div class="gap-8 py-4 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6 items-center">
@@ -85,49 +85,92 @@
     </div>
     
     
-    <section class="bg-white dark:bg-black custom-auto-height h-[80vh] border-t-2" id="about">
-      <div class="py-8 px-4 mx-auto max-w-screen-2xl lg:py-16 lg:px-6">
-          <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
-              <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">À propos de TC-Forum</h2>
-              <p class="font-light text-white lg:mb-16 sm:text-xl dark:text-gray-400">TC-Forum est une plateforme dédiée aux étudiants en Technico-Commercial. Elle vise à offrir un espace où les étudiants peuvent partager des idées, poser des questions et se guider mutuellement grâce à des conseils pratiques, des informations sur les études, les opportunités de stage et plus encore.</p>
-          </div> 
-          <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
-              <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                  <div class="mb-4 text-yellow-500">
-                      <i class="fas fa-user-circle fa-3x"></i>
-                  </div>
-                  <h3 class="text-xl font-semibold text-gray-800 mb-2">Développé par Yassine Elqari</h3>
-                  <p class="text-gray-600">Ce site web a été développé par Yassine Elqari en 2025 pour aider les étudiants à s'entraider et à trouver des réponses à leurs questions dans le domaine Technico-Commercial.</p>
+    <section class="relative bg-white dark:bg-black py-8 scroll-mt-28" id="about">
+      <div class="container mx-auto px-8 max-w-7xl">
+        <!-- En-tête -->
+        <div class="text-center mb-20">
+          <h2 class="text-5xl font-bold text-white mb-6">Notre ADN</h2>
+          <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Une aventure collective née de la passion pour l'éducation technologique
+          </p>
+        </div>
+    
+        <!-- Contenu principal -->
+        <div class="flex flex-col lg:flex-row gap-12 items-start">
+          <!-- Colonne gauche - Photo + Date -->
+          <div class="lg:w-1/3 relative group">
+            <img src="yassine.jpg" alt="Fondateur"
+     class="rounded-3xl shadow-2xl w-full max-w-xs mx-auto lg:max-w-full hover:rotate-2 transition-transform duration-300">
+
+            
+            <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg text-center">
+              <div class="text-teal-500 text-sm font-mono mb-1">Depuis le début de </div>
+              <div class="text-2xl font-bold text-gray-800 dark:text-white">2025</div>
+            </div>
+          </div>
+    
+          <!-- Colonne droite - Contenu -->
+          <div class="lg:w-2/3 space-y-12">
+            <!-- Bloc Fondateur -->
+            <div class="space-y-6 border-l-4 border-teal-500 pl-8">
+              <div class="flex items-center gap-4">
+                <div class="bg-teal-100 dark:bg-teal-900/30 p-4 rounded-full">
+                  <i class="fas fa-user-astronaut text-2xl text-teal-500"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 dark:text-white">Yassine Elqari</h3>
               </div>
-              <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                  <div class="mb-4 text-green-500">
-                      <i class="fas fa-calendar-alt fa-3x"></i>
+              <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                En tant qu'étudiant en BTS TC, j'ai conçu cette plateforme pour combler le fossé entre la théorie académique et les réalités du terrain professionnel.
+              </p>
+            </div>
+    
+            <!-- Timeline horizontale -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <!-- Technologie -->
+              <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center gap-4 mb-4">
+                  <div class="bg-teal-100 dark:bg-teal-900/30 p-3 rounded-lg">
+                    <i class="fas fa-microchip text-xl text-teal-500"></i>
                   </div>
-                  <h3 class="text-xl font-semibold text-gray-800 mb-2">Lancé en 2025</h3>
-                  <p class="text-gray-600">Le site a été lancé en mars 2025 et est conçu pour répondre aux besoins des étudiants en BTS Technico-Commercial et leur fournir des ressources essentielles pour réussir leur parcours académique.</p>
+                  <h4 class="text-xl font-semibold text-gray-800 dark:text-white">Stack Technique</h4>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-300 rounded-full text-sm">Angular</span>
+                  <span class="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-300 rounded-full text-sm">Spring Boot</span>
+                  <span class="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-300 rounded-full text-sm">IA Generative</span>
+                </div>
               </div>
-                  
-              <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                  <div class="mb-4 text-blue-500">
-                      <i class="fas fa-laptop-code fa-3x"></i>
+    
+              <!-- Objectif -->
+              <div class="p-6 bg-gradient-to-br from-teal-50 to-white dark:from-teal-900/20 dark:to-black rounded-2xl">
+                <div class="flex items-center gap-4 mb-4">
+                  <div class="bg-teal-100 dark:bg-teal-900/30 p-3 rounded-lg">
+                    <i class="fas fa-bullseye text-xl text-teal-500"></i>
                   </div>
-                  <h3 class="text-xl font-semibold text-gray-800 mb-2">Technologies modernes</h3>
-                  <p class="text-gray-600">Développé avec des technologies web modernes, telles qu'Angular, Tailwind CSS, et un backend robuste avec Spring Boot, garantissant une expérience utilisateur fluide et réactive.</p>
+                  <h4 class="text-xl font-semibold text-gray-800 dark:text-white">Notre Boussole</h4>
+                </div>
+                <ul class="space-y-3 text-gray-600 dark:text-gray-300">
+                  <li class="flex items-center gap-2">
+                    <i class="fas fa-check text-teal-500"></i>
+                    Partage de connaissances
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <i class="fas fa-check text-teal-500"></i>
+                    Accompagnement personnalisé
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <i class="fas fa-check text-teal-500"></i>
+                    Innovation continue
+                  </li>
+                </ul>
               </div>
-          
-              <!-- Element 4: Objectif -->
-              <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                  <div class="mb-4 text-red-500">
-                      <i class="fas fa-bullseye fa-3x"></i>
-                  </div>
-                  <h3 class="text-xl font-semibold text-gray-800 mb-2">Objectif</h3>
-                  <p class="text-gray-600">Cette plateforme a pour objectif d'offrir un espace où les étudiants peuvent poser leurs questions, partager leurs expériences et accéder à des informations utiles sur les études, les stages, et les débouchés professionnels.</p>
-              </div> 
-          </div>  
+            </div>
+          </div>
+        </div>
       </div>
-  </section>
+    </section>
   
-  <section class="py-24 bg-white dark:bg-black" id="contact">
+  <section class="py-12 bg-white dark:bg-black scroll-mt-20" id="contact">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 grid-cols-1 gap-x-24">
             <!-- Partie gauche : Formulaire de contact -->
@@ -153,7 +196,7 @@
                 </form>
             </div>
             <!-- Partie droite : Informations de contact -->
-            <div class="lg:max-w-xl w-full h-[600px] shapecol flex items-center justify-center bg-cover bg-no-repeat bg-[url('https://pagedone.io/asset/uploads/1696245837.png')]" style="background-color: #EFE9E0;">
+            <div class="lg:max-w-xl w-full h-[600px]  shapecol flex items-center justify-center bg-cover bg-no-repeat bg-[url('https://pagedone.io/asset/uploads/1696245837.png')]" style="background-color: #EFE9E0;">
                 <div class="lg:w-96 w-auto h-auto bg-black adresscol rounded-3xl shadow-xl lg:p-6 p-4">
                     <div class="flex items-center justify-center space-x-1 mb-4">
                         <img src="logo-TC.webp" alt="Logo Evetium" class="w-12 h-12 rounded-full">
@@ -182,12 +225,12 @@
         </div>
     </div>
   </section>
-  <section class="bg-white dark:bg-black custom-auto-height h-[80vh] border-t-2" id="services">
-    <div class="py-8 px-4 mx-auto max-w-screen-2xl lg:py-16 lg:px-6">
-        <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
+  <section class="bg-white dark:bg-black custom-auto-height h-[75vh] border-t-2 scroll-mt-28" id="services">
+    <div class="py-8 px-4 mx-auto max-w-screen-2xl lg:py-4 lg:px-6">
+        <div class="mx-auto max-w-screen-sm text-center mb-4 lg:mb-16">
             <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Support Étudiant</h2>
         </div>
-        <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
+        <div class="grid gap-8 mb-6 lg:mb-8 md:grid-cols-2">
             <!-- Service 1: Créer un Compte -->
             <div class="bg-white p-6 rounded-lg shadow-lg text-center">
                 <div class="mb-4 text-yellow-500">
@@ -260,10 +303,18 @@
         <div>
           <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Légal</h2>
           <ul class="text-gray-500 dark:text-gray-400 font-medium space-y-4">
-            <li><a href="/privacy-policy" class="hover:underline">Politique de confidentialité</a></li>
-            <li><a href="/terms" class="hover:underline">Conditions générales</a></li>
+            <li>
+              <a href="javascript:;" (click)="openModal('privacy')" class="hover:underline cursor-pointer">
+                Politique de confidentialité
+              </a>
+            </li>
+            <li>
+              <a href="javascript:;" (click)="openModal('terms')" class="hover:underline cursor-pointer">
+                Conditions générales
+              </a>
+            </li>
           </ul>
-        </div>
+        </div>        
       </div>
   
       <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
@@ -278,13 +329,13 @@
             </svg>
             <span class="sr-only">Facebook</span>
           </a>
-          <a href="https://twitter.com" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+          <a href="https://twitter.com" target="_blank" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
             <svg class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M8.29 20.251c7.55 0 11.675-6.243 11.675-11.675 0-.18 0-.36-.012-.539A8.345 8.345 0 0 0 22 5.92a8.192 8.192 0 0 1-2.357.646 4.107 4.107 0 0 0 1.804-2.266 8.225 8.225 0 0 1-2.606.996 4.1 4.1 0 0 0-6.993 3.733 11.646 11.646 0 0 1-8.451-4.287 4.1 4.1 0 0 0 1.27 5.476 4.066 4.066 0 0 1-1.856-.513v.052a4.1 4.1 0 0 0 3.29 4.018 4.07 4.07 0 0 1-1.85.07 4.105 4.105 0 0 0 3.833 2.847 8.24 8.24 0 0 1-5.093 1.755A8.343 8.343 0 0 1 2 18.75a11.615 11.615 0 0 0 6.29 1.842Z" />
             </svg>
             <span class="sr-only">Twitter</span>
           </a>
-          <a href="https://github.com" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+          <a href="https://github.com/TarekElqari" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
             <svg class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C5.373 0 0 5.373 0 12a12 12 0 0 0 8.205 11.431c.599.11.819-.26.819-.577v-2.24c-3.338.727-4.042-1.44-4.042-1.44-.545-1.384-1.33-1.752-1.33-1.752-1.087-.744.083-.73.083-.73 1.203.084 1.837 1.235 1.837 1.235 1.068 1.83 2.802 1.302 3.485.995.109-.773.419-1.302.763-1.601-2.665-.305-5.466-1.332-5.466-5.93 0-1.311.47-2.382 1.236-3.222-.124-.304-.535-1.524.116-3.176 0 0 1.008-.322 3.3 1.23a11.45 11.45 0 0 1 3.003-.404c1.02.005 2.047.138 3.003.404 2.292-1.552 3.3-1.23 3.3-1.23.652 1.652.24 2.872.117 3.176.767.84 1.236 1.911 1.236 3.222 0 4.61-2.804 5.62-5.474 5.92.43.37.823 1.102.823 2.222v3.293c0 .32.218.692.824.576A12 12 0 0 0 24 12c0-6.627-5.373-12-12-12Z" />
             </svg>
@@ -295,4 +346,11 @@
     </div>
   </footer>
   </div>
+
+  <app-legal-modal
+  *ngIf="showModal"
+  [content]="modalContent"
+  (close)="closeModal()"
+></app-legal-modal>
+
   

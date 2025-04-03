@@ -1,117 +1,166 @@
-<div class="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300">
-    <!-- Navbar -->
-    <nav class="fixed top-0 z-50 w-full bg-white bg-opacity-95 border-b border-gray-300 shadow-lg">
-      <div class="px-6 py-3 flex justify-between items-center">
-        <div class="flex items-center space-x-4">
-          <!-- Sidebar Toggle Button -->
-          <button (click)="toggleSidebar()" 
-                  class="toggle-btn md:hidden z-50 p-2 rounded-lg bg-white shadow-md hover:bg-gray-100 focus:outline-none">
-            <i class="fas text-gray-700 text-xl" [ngClass]="isSidebarOpen ? 'fa-times' : 'fa-bars'"></i>
+<div class="min-h-screen relative bg-cover bg-center" style="background-image: url('dark-bg.jpg');">
+  <!-- Background overlay -->
+
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 z-50 w-full bg-gray-900 backdrop-blur-md border-b border-gray-200/80 shadow-sm">
+    <div class="px-6 py-3 flex justify-between items-center">
+      <!-- Left -->
+      <div class="flex items-center space-x-4">
+        <button (click)="toggleSidebar()" 
+                class="toggle-btn md:hidden z-50 p-2 rounded-xl bg-white shadow-sm hover:shadow-md transition-shadow duration-200">
+          <i class="fas text-gray-700 text-xl transition-transform" 
+             [ngClass]="isSidebarOpen ? 'fa-times rotate-90' : 'fa-bars'"></i>
+        </button>
+        <div class="flex items-center space-x-3">
+          <img src="logo-TC.webp" class="h-12 w-12 rounded-xl shadow-sm border-2 border-white" alt="Logo">
+          <span class="text-2xl font-bold bg-gradient-to-r from-teal-600 to-teal-400 bg-clip-text text-transparent">
+            TC-Forum
+          </span>
+        </div>
+      </div>
+
+      <!-- User -->
+      <div class="flex items-center space-x-3 bg-white/90 px-3 py-1.5 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+        <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 text-xl font-bold">
+          {{ firstName.charAt(0) }}{{ lastName.charAt(0) }}
+        </div>
+        <span class="text-lg font-semibold text-gray-700">{{ firstName }} {{ lastName }}</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="aside fixed top-0 left-0 w-72 h-full pt-20 bg-gray-900 backdrop-blur-md shadow-xl border-r border-gray-200/80 z-40 transform transition-transform duration-300"
+         [ngClass]="{ '-translate-x-full': !isSidebarOpen, 'translate-x-0': isSidebarOpen || isLargeScreen }">
+    <div class="h-full px-4 py-6 overflow-y-auto">
+      <ul class="space-y-2 text-[15px] font-medium text-white">
+        <li>
+          <button (click)="setView('home')" 
+                  [class.active]="currentView === 'home'"
+                  class="w-full text-left flex items-center p-3.5 rounded-xl transition-all duration-200 
+                         hover:bg-teal-50/50 hover:shadow-sm border border-transparent
+                         [&.active]:border-teal-100 [&.active]:bg-teal-50 [&.active]:shadow-inner">
+            <i class="fas fa-home mr-3 text-lg w-6 text-center text-teal-500/90"></i>
+            Accueil
           </button>
-          <!-- Logo and Title -->
-          <img src="logo-TC.webp" class="h-12 w-12 rounded-full shadow-md" alt="Logo TC-Forum">
-          <span class="text-2xl font-bold text-gray-800">TC-Forum</span>
-        </div>
-        <div class="flex items-center space-x-4 bg-gray-100 p-2 rounded-full shadow-md">
-          <img class="w-10 h-10 rounded-full border-2 border-gray-400" src="default-profile.jpg" alt="User photo">
-          <span class="text-lg font-bold text-gray-800">{{ firstName }} {{ lastName }}</span>
+        </li>
+        <li>
+          <button (click)="setView('documents')" 
+                  [class.active]="currentView === 'documents'"
+                  class="w-full text-left flex items-center p-3.5 rounded-xl transition-all duration-200 
+                         hover:bg-teal-50/50 hover:shadow-sm border border-transparent
+                         [&.active]:border-teal-100 [&.active]:bg-teal-50 [&.active]:shadow-inner">
+            <i class="fas fa-book mr-3 text-lg w-6 text-center text-teal-500/90"></i>
+            Documents
+          </button>
+        </li>
+        <li>
+          <button class="w-full text-left flex items-center p-3.5 rounded-xl transition-all duration-200 
+                         hover:bg-teal-50/50 hover:shadow-sm border border-transparent">
+            <i class="fas fa-comments mr-3 text-lg w-6 text-center text-teal-500/90"></i>
+            Forum
+          </button>
+        </li>
+        <li>
+          <button (click)="setView('chatbot')" 
+          [class.active]="currentView === 'chatbot'"
+          class="w-full text-left flex items-center p-3.5 rounded-xl transition-all duration-200 
+                 hover:bg-teal-50/50 hover:shadow-sm border border-transparent
+                 [&.active]:border-teal-100 [&.active]:bg-teal-50 [&.active]:shadow-inner">
+            <i class="fas fa-robot mr-3 text-lg w-6 text-center text-teal-500/90"></i>
+            Chatbot
+          </button>
+        </li>
+        <li>
+          <button (click)="setView('settings')" 
+                  [class.active]="currentView === 'settings'"
+                  class="w-full text-left flex items-center p-3.5 rounded-xl transition-all duration-200 
+                         hover:bg-teal-50/50 hover:shadow-sm border border-transparent
+                         [&.active]:border-teal-100 [&.active]:bg-teal-50 [&.active]:shadow-inner">
+            <i class="fas fa-cogs mr-3 text-lg w-6 text-center text-teal-500/90"></i>
+            Paramètres
+          </button>
+        </li>
+        <li class="pt-4 mt-20 border-t border-gray-200/80">
+          <button (click)="logout()" 
+                  class="w-full flex items-center p-3.5 rounded-xl transition-all duration-200 
+                         bg-red-50/80 hover:bg-red-100/90 text-red-600/90 hover:text-red-700
+                         hover:shadow-sm border border-transparent hover:border-red-200">
+            <i class="fas fa-sign-out-alt mr-3 text-lg w-6 text-center"></i>
+            Déconnexion
+          </button>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="relative z-10 p-6 transition-all duration-300 ease-in-out pt-24"
+       [class.md:ml-72]="isLargeScreen"
+       [class.ml-0]="!isLargeScreen">
+    
+    <!-- Home View -->
+    <div *ngIf="currentView === 'home'" class="bg-gray-900 backdrop-blur-none rounded-2xl p-8 shadow-lg border border-gray-100/80">
+      <h1 class="text-4xl font-bold text-white mb-6 leading-tight">
+        Bienvenue, <span class="bg-gradient-to-r from-teal-600 to-teal-400 bg-clip-text text-transparent">{{ firstName }}</span> !
+      </h1>
+      <div class="space-y-6">
+        <p class="text-lg text-white leading-relaxed">
+          Nous sommes ravis de vous voir sur 
+          <span class="font-semibold bg-gradient-to-r from-teal-600 to-teal-400 bg-clip-text text-transparent">TC-Forum</span>, votre plateforme collaborative.
+        </p>
+        <div class="bg-gradient-to-br from-teal-50/50 to-white/30 rounded-xl p-6 shadow-inner border border-teal-100/50">
+          <h2 class="text-xl font-semibold text-white mb-4">Voici ce que vous pouvez faire :</h2>
+          <ul class="space-y-4">
+            <li class="flex items-start p-3.5 rounded-lg bg-white/80 backdrop-blur-none shadow-sm hover:shadow-md transition-shadow border border-gray-100/80">
+              <span class="text-2xl mr-3.5 text-teal-500/90">📄</span>
+              <div>
+                <h3 class="font-medium text-gray-800/90">Documents pédagogiques</h3>
+                <p class="text-sm text-gray-600/90 mt-1">Consulter et partager des ressources éducatives</p>
+              </div>
+            </li>
+            <li class="flex items-start p-3.5 rounded-lg bg-white/80 backdrop-blur-none shadow-sm hover:shadow-md transition-shadow border border-gray-100/80">
+              <span class="text-2xl mr-3.5 text-teal-500/90">💬</span>
+              <div>
+                <h3 class="font-medium text-gray-800/90">Forum communautaire</h3>
+                <p class="text-sm text-gray-600/90 mt-1">Échanger avec la communauté</p>
+              </div>
+            </li>
+            <li class="flex items-start p-3.5 rounded-lg bg-white/80 backdrop-blur-none shadow-sm hover:shadow-md transition-shadow border border-gray-100/80">
+              <span class="text-2xl mr-3.5 text-teal-500/90">🤖</span>
+              <div>
+                <h3 class="font-medium text-gray-800/90">Assistant intelligent</h3>
+                <p class="text-sm text-gray-600/90 mt-1">Obtenir des réponses instantanées</p>
+              </div>
+            </li>
+            <li class="flex items-start p-3.5 rounded-lg bg-white/80 backdrop-blur-none shadow-sm hover:shadow-md transition-shadow border border-gray-100/80">
+              <span class="text-2xl mr-3.5 text-teal-500/90">🎓</span>
+              <div>
+                <h3 class="font-medium text-gray-800/90">Collaboration</h3>
+                <p class="text-sm text-gray-600/90 mt-1">Travailler avec étudiants et professeurs</p>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
-    </nav>
-  
-    <!-- Sidebar -->
-    <aside class="aside fixed top-0 left-0 w-72 h-full pt-20 bg-white bg-opacity-95 shadow-2xl border-r border-gray-300 transition-transform duration-300 ease-in-out z-40"
-           [class.-translate-x-full]="!isSidebarOpen"
-           [class.md:translate-x-0]="true">
-      <div class="h-full px-6 py-6 overflow-y-auto">
-        <ul class="space-y-3 text-lg font-semibold text-gray-800">
-          <li>
-            <button (click)="setView('home')" 
-                    [class.active]="currentView === 'home'"
-                    class="w-full text-left flex items-center p-4 rounded-xl transition duration-300 hover:bg-gray-100 hover:shadow-md border hover:border-teal-500">
-              <i class="fas fa-home mr-4 text-teal-600"></i>Accueil
-            </button>
-          </li>
-          <li>
-            <button (click)="setView('documents')" 
-                    [class.active]="currentView === 'documents'"
-                    class="w-full text-left flex items-center p-4 rounded-xl transition duration-300 hover:bg-gray-100 hover:shadow-md border hover:border-teal-500">
-              <i class="fas fa-book mr-4 text-teal-600"></i>Documents
-            </button>
-          </li>
-          <li>
-            <button class="w-full text-left flex items-center p-4 rounded-xl transition duration-300 hover:bg-gray-100 hover:shadow-md border hover:border-teal-500">
-              <i class="fas fa-comments mr-4 text-teal-600"></i>Forum
-            </button>
-          </li>
-          <li>
-            <button class="w-full text-left flex items-center p-4 rounded-xl transition duration-300 hover:bg-gray-100 hover:shadow-md border hover:border-teal-500">
-              <i class="fas fa-robot mr-4 text-teal-600"></i>Chatbot
-            </button>
-          </li>
-          <li>
-            <button class="w-full text-left flex items-center p-4 rounded-xl transition duration-300 hover:bg-gray-100 hover:shadow-md border hover:border-teal-500">
-              <i class="fas fa-cogs mr-4 text-teal-600"></i>Paramètres
-            </button>
-          </li>
-          <li class="pt-4 mt-4 border-t border-gray-200">
-            <button (click)="logout()" 
-                    class="w-full text-left flex items-center p-4 rounded-xl transition duration-300 bg-red-200 hover:bg-red-500 hover:text-white text-red-600 hover:shadow-md">
-              <i class="fas fa-sign-out-alt mr-4"></i>Déconnexion
-            </button>
-          </li>
-        </ul>
-      </div>
-    </aside>
-  
-    <!-- Mobile Overlay -->
-    <div *ngIf="isSidebarOpen && isMobileScreen()" 
-         class="sidebar-overlay md:hidden"
-         (click)="toggleSidebar()"></div>
-  
-    <!-- Main Content - Fixed Structure -->
-    <div class="main-content p-8 pt-24 transition-all duration-300 ease-in-out"
-         [class.md:ml-72]="true"
-         [class.ml-0]="!isSidebarOpen">
-      
-      <!-- Vue Accueil -->
-      <div *ngIf="currentView === 'home'" class="bg-white shadow-lg rounded-xl p-8">
-        <h1 class="text-4xl font-extrabold text-gray-800 mb-6">Bienvenue, {{ firstName }} !</h1>
-        
-        <div class="prose max-w-none">
-          <p class="text-xl text-gray-600 mb-6">Nous sommes ravis de vous voir sur <span class="font-semibold text-gray-800">TC-Forum</span>.</p>
-          
-          <div class="bg-gray-50 rounded-lg p-6 mb-8">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">Voici ce que vous pouvez faire :</h2>
-            <ul class="space-y-3">
-              <li class="flex items-start">
-                <span class="inline-block mr-3 mt-1">📄</span>
-                <span>Consulter et partager des documents pédagogiques</span>
-              </li>
-              <li class="flex items-start">
-                <span class="inline-block mr-3 mt-1">💬</span>
-                <span>Échanger avec la communauté sur le forum</span>
-              </li>
-              <li class="flex items-start">
-                <span class="inline-block mr-3 mt-1">🤖</span>
-                <span>Poser vos questions au chatbot intelligent</span>
-              </li>
-              <li class="flex items-start">
-                <span class="inline-block mr-3 mt-1">🎓</span>
-                <span>Collaborer avec étudiants et professeurs</span>
-              </li>
-            </ul>
-          </div>
-          
-          <div class="border-t border-gray-200 pt-6">
-            <p class="text-lg font-semibold text-gray-700">N'hésitez pas à contribuer en partageant vos ressources et votre expérience !</p>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Vue Documents -->
-      <div *ngIf="currentView === 'documents'" class="space-y-6">
+    </div>
+
+    <!-- Documents View -->
+    <div *ngIf="currentView === 'documents'" class="space-y-6">
+      <div class="bg-gray-900 p-6 rounded-xl shadow-md backdrop-blur-none">
         <app-document></app-document>
       </div>
     </div>
+
+    <!-- Settings View -->
+    <div *ngIf="currentView === 'settings'" class="space-y-6">
+      <div class="bg-gray-900 p-6 rounded-xl shadow-md backdrop-blur-none">
+        <app-user-profile></app-user-profile>
+      </div>
+    </div>
+    <div *ngIf="currentView === 'chatbot'" class="space-y-6">
+        <app-chatbot></app-chatbot>
+    </div>
   </div>
+</div>

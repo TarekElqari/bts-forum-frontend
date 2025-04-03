@@ -76,9 +76,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         }).then(() => this.router.navigate(['/dashboard']));
       },
       error: (error) => {
-        let errorMessage = 'Une erreur est survenue.';
+        let errorMessage = '';
+        console.log(error.status
+        );
 
-        if (error.status === 401) {
+        if (error.status === 410) {
           errorMessage = 'Email ou mot de passe incorrect.';
         } else if (error.status === 404) {
           errorMessage = 'Aucun compte trouvé avec cet email.';

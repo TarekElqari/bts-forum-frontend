@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
-import { DocumentDto } from '../../../../models/etudiant/document.model';
+import { DocumentDto } from '../../../../models/shared-models/document.model';
 import { AuthService } from '../../../../services/auth.service';
 import { DocumentService } from '../../../../services/document.service';
 import { ConfirmModalComponent } from '../../../../shared/confirm-modal/confirm-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { Matiere } from '../../../../models/shared-models/Matiere.model';
 
 @Component({
   selector: 'app-document-list',
@@ -16,6 +17,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./document-list.component.css']
 })
 export class DocumentListComponent implements OnInit {
+  @Input() matieres: Matiere[] = [];
   allDocuments: DocumentDto[] = [];
   filteredDocuments: DocumentDto[] = [];
   searchQuery = '';
@@ -28,10 +30,49 @@ export class DocumentListComponent implements OnInit {
   currentUserId: number | null = null;
   showDeleteModal = false;
   isDownloading = false;
+  niveaux: string[] = ['TC_1ERE_ANNEE', 'TC_2EME_ANNEE'];
+selectedNiveau: string = '';
+filteredMatieres: Matiere[] = [];
+
+onNiveauChange(): void {
+  this.filteredMatieres = this.matieres.filter(m => m.niveau === this.selectedNiveau);
+  this.selectedMatiere = '';
+  this.applyFilters();
+}
+
+applyFilters(): void {
+  this.filteredDocuments = this.allDocuments.filter(doc => {
+    const matchesSearch = !this.searchQuery || 
+      doc.filename.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
+      doc.description.toLowerCase().includes(this.searchQuery.toLowerCase());
+
+    const matchesType = !this.selectedType || doc.type === this.selectedType;
+    const matchesNiveau = !this.selectedNiveau || doc.niveau === this.selectedNiveau;
+    const matchesMatiere = !this.selectedMatiere || doc.matiere === this.selectedMatiere;
+    const matchesTags = this.selectedTags.length === 0 || 
+      this.selectedTags.every(tag => doc.tags.includes(tag));
+
+    return matchesSearch && matchesType && matchesNiveau && matchesMatiere && matchesTags;
+  });
+}
+
+
+  types: string[] = [
+    'Cours',
+    'Examen',
+    'Exercice corrigé',
+    'Rapport de stage',
+    'TD',
+    'TP',
+    'Autre'
+  ].sort((a, b) => {
+    if (a === 'Autre') return 1;
+    if (b === 'Autre') return -1;
+    return a.localeCompare(b);
+  });
   
   documentToDelete: number | null = null;
   
-
   constructor(
     private documentService: DocumentService,
     private authService: AuthService
@@ -64,7 +105,7 @@ export class DocumentListComponent implements OnInit {
     this.availableTags = [...new Set(allTags)].filter(t => t);
   }
 
-  applyFilters(): void {
+  /*applyFilters(): void {
     this.filteredDocuments = this.allDocuments.filter(doc => {
       // Search filter
       const matchesSearch = !this.searchQuery || 
@@ -83,7 +124,7 @@ export class DocumentListComponent implements OnInit {
       
       return matchesSearch && matchesType && matchesMatiere && matchesTags;
     });
-  }
+  }*/
 
   toggleTagFilter(tag: string): void {
     if (this.selectedTags.includes(tag)) {
@@ -155,12 +196,6 @@ export class DocumentListComponent implements OnInit {
     });
   }
   
-  
-  
-
-
-
-
   confirmDelete(id: number): void {
     this.documentToDelete = id;
     this.showDeleteModal = true;
@@ -202,5 +237,28 @@ export class DocumentListComponent implements OnInit {
       text: message,
       confirmButtonColor: '#0e7490',
     });
+  }
+
+  //icons
+  getFileIconClass(filename: string): string {
+    const extension = filename.split('.').pop()?.toLowerCase() || '';
+    
+    const iconMap: { [key: string]: string } = {
+      'pdf': 'fas fa-file-pdf text-red-500',
+      'doc': 'fas fa-file-word text-blue-600',
+      'docx': 'fas fa-file-word text-blue-600',
+      'xls': 'fas fa-file-excel text-green-600',
+      'xlsx': 'fas fa-file-excel text-green-600',
+      'ppt': 'fas fa-file-powerpoint text-orange-600',
+      'pptx': 'fas fa-file-powerpoint text-orange-600',
+      'jpg': 'fas fa-file-image text-emerald-600',
+      'jpeg': 'fas fa-file-image text-emerald-600',
+      'png': 'fas fa-file-image text-emerald-600',
+      'gif': 'fas fa-file-image text-emerald-600',
+      'txt': 'fas fa-file-alt text-gray-500',
+      'zip': 'fas fa-file-archive text-purple-500'
+    };
+  
+    return iconMap[extension] || 'fas fa-file-alt text-gray-500';
   }
 }

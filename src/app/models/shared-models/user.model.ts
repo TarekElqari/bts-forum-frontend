@@ -4,4 +4,6 @@ export interface UserDto {
     lastName: string;
     email?: string;
     username?: string;
+    classe? :string;
+    lastUpdated: string;
   }

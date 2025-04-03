@@ -1,51 +1,54 @@
-<div class="bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
-  <h3 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
-    <i class="fas fa-cloud-upload-alt text-teal-600 mr-3"></i>
+<div class="bg-gray-900 p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
+  <h3 class="text-2xl font-bold mb-6 text-white flex items-center">
+    <i class="fas fa-cloud-upload-alt text-teal-500 mr-3"></i>
     Ajouter un nouveau document
   </h3>
 
   <!-- Dropdowns Row -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-    <!-- Matière Dropdown -->
-    <div class="relative">
-      <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
-        <i class="fas fa-book mr-2 text-teal-600"></i> Matière
+    <!-- Niveau Dropdown -->
+    <div class="relative mb-4">
+      <label class="block text-sm font-medium text-white mb-1 flex items-center">
+        <i class="fas fa-layer-group mr-2 text-teal-500"></i> Niveau
       </label>
-      <select [(ngModel)]="matiere" (change)="onMatiereChange()" 
-              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200">
+      <select [(ngModel)]="selectedNiveau" (change)="onNiveauChange()" 
+              class="w-full p-3 border bg-white border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200">
+        <option value="" disabled selected>Sélectionnez un niveau</option>
+        <option *ngFor="let niveau of niveaux" [value]="niveau">{{ niveau }}</option>
+      </select>
+    </div>
+
+    <!-- Matière Dropdown -->
+    <div class="relative mb-4">
+      <label class="block text-sm font-medium text-white mb-1 flex items-center">
+        <i class="fas fa-book mr-2 text-teal-500"></i> Matière
+      </label>
+      <select [(ngModel)]="selectedMatiereId" (change)="onMatiereChange()"
+              [disabled]="!selectedNiveau"
+              class="w-full p-3 border bg-white border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200 disabled:bg-red-100 disabled:cursor-not-allowed">
         <option value="" disabled selected>Sélectionnez une matière</option>
-        <option value="Mathématiques">Mathématiques</option>
-        <option value="Physique">Physique</option>
-        <option value="Informatique">Informatique</option>
-        <option value="Chimie">Chimie</option>
-        <option value="Biologie">Biologie</option>
-        <option value="Autre">Autre</option>
+        <option *ngFor="let m of filteredMatieres" [value]="m.id">{{ m.name }}</option>
+        <option value="autre">Autre</option>
       </select>
     </div>
 
     <!-- Type de Document Dropdown -->
     <div class="relative">
-      <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
-        <i class="fas fa-file-alt mr-2 text-teal-600"></i> Type de document
+      <label class="block text-sm font-medium text-white mb-1 flex items-center">
+        <i class="fas fa-file-alt mr-2 text-teal-500"></i> Type de document
       </label>
       <select [(ngModel)]="type" (change)="onTypeChange()" 
-              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200">
+              class="w-full p-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200">
         <option value="" disabled selected>Sélectionnez un type</option>
-        <option value="Examen">Examen</option>
-        <option value="Rapport de stage">Rapport de stage</option>
-        <option value="Exercice corrigé">Exercice corrigé</option>
-        <option value="Cours">Cours</option>
-        <option value="TD">Travaux Dirigés</option>
-        <option value="TP">Travaux Pratiques</option>
-        <option value="Autre">Autre</option>
+        <option *ngFor="let t of types" [value]="t">{{ t }}</option>
       </select>
-    </div>
+    </div>    
   </div>
 
   <!-- Custom Matière Input -->
   <div *ngIf="showCustomMatiere" class="mb-4 animate-fadeIn">
-    <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
-      <i class="fas fa-pen mr-2 text-teal-600"></i> Précisez la matière
+    <label class="bg-white block text-sm font-medium text-white mb-1 flex items-center">
+      <i class="fas fa-pen mr-2 text-teal-500"></i> Précisez la matière
     </label>
     <input [(ngModel)]="customMatiere" placeholder="Entrez le nom de la matière" 
            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200">
@@ -53,11 +56,11 @@
 
   <!-- Custom Type Input -->
   <div *ngIf="showCustomType" class="mb-4 animate-fadeIn">
-    <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
-      <i class="fas fa-pen mr-2 text-teal-600"></i> Précisez le type de document
+    <label class="block text-sm font-medium text-white mb-1 flex items-center">
+      <i class="fas fa-pen mr-2 text-teal-500"></i> Précisez le type de document
     </label>
     <input [(ngModel)]="customType" placeholder="Entrez le type de document" 
-           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200">
+           class="bg-white w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200">
   </div>
 
   <!-- Drag & Drop File Input -->
@@ -93,20 +96,20 @@
 
   <!-- Tags -->
   <div class="mt-6">
-    <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
-      <i class="fas fa-tags mr-2 text-teal-600"></i> Tags
+    <label class="block text-sm font-medium text-white mb-1 flex items-center">
+      <i class="fas fa-tags mr-2 text-teal-500"></i> Tags
     </label>
     <input [(ngModel)]="tagsInput" placeholder="Tags (séparés par des virgules)" 
-           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200">
+           class="w-full p-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200">
   </div>
   
   <!-- Description -->
   <div class="mt-4">
-    <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
-      <i class="fas fa-align-left mr-2 text-teal-600"></i> Description
+    <label class="block text-sm font-medium text-white mb-1 flex items-center">
+      <i class="fas fa-align-left mr-2 text-teal-500"></i> Description
     </label>
     <textarea [(ngModel)]="description" placeholder="Description du document" rows="3" 
-              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200"></textarea>
+              class="w-full p-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-200"></textarea>
   </div>
 
   <!-- Submit Button -->

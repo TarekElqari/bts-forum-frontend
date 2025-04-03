@@ -1,0 +1,31 @@
+<div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto p-6 relative">
+      <button (click)="close.emit()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="fas fa-times"></i>
+      </button>
+  
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">
+        {{ content === 'privacy' ? 'Politique de confidentialité' : 'Conditions générales' }}
+      </h2>
+  
+      <div class="text-sm text-gray-700 space-y-4">
+        <ng-container *ngIf="content === 'privacy'">
+          <p>Nous collectons uniquement les informations nécessaires pour assurer le bon fonctionnement de TC-Forum...</p>
+          <p>Nous ne partageons aucune donnée avec des tiers sans votre consentement.</p>
+          <p>Vous pouvez consulter, modifier ou supprimer vos informations à tout moment.</p>
+          <p>En utilisant TC-Forum, vous acceptez cette politique de confidentialité.</p>
+        </ng-container>
+  
+        <ng-container *ngIf="content === 'terms'">
+          <p>En utilisant TC-Forum, vous acceptez les règles suivantes :</p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>Ne pas partager de contenu inapproprié ou illégal.</li>
+            <li>Respecter les autres membres de la communauté.</li>
+            <li>Utiliser les documents partagés uniquement à des fins éducatives.</li>
+            <li>Nous nous réservons le droit de suspendre tout compte en cas de non-respect.</li>
+          </ul>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  

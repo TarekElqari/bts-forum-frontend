@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -25,7 +25,7 @@ export class SignupComponent implements OnInit {
   hasNumber: boolean = false;
   hasSpecial: boolean = false;
 
-  // Password match & UI logic
+  // Password validation
   passwordsMatch: boolean = true;
   showPasswordStrength: boolean = false;
   startPasswordMatchCheck: boolean = false;
@@ -41,11 +41,7 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      if (params['role'] === 'TEACHER') {
-        this.selectedRole = 'ROLE_TEACHER';
-      } else {
-        this.selectedRole = 'ROLE_STUDENT';
-      }
+      this.selectedRole = params['role'] === 'TEACHER' ? 'ROLE_TEACHER' : 'ROLE_STUDENT';
     });
 
     this.signupForm = this.fb.group({
@@ -53,10 +49,24 @@ export class SignupComponent implements OnInit {
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       classe: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
-      confirmPassword: ['', Validators.required],
-    });
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(16)
+      ]],
+      confirmPassword: ['', Validators.required]
+    }, { validator: this.passwordMatchValidator });
 
+    this.setupPasswordListeners();
+  }
+
+  private passwordMatchValidator(form: AbstractControl) {
+    return form.get('password')?.value === form.get('confirmPassword')?.value 
+      ? null 
+      : { mismatch: true };
+  }
+
+  private setupPasswordListeners() {
     this.signupForm.get('password')?.valueChanges.subscribe(password => {
       if (password) {
         this.showPasswordStrength = true;
@@ -67,8 +77,8 @@ export class SignupComponent implements OnInit {
       this.checkPasswordsMatch();
     });
 
-    this.signupForm.get('confirmPassword')?.valueChanges.subscribe(confirm => {
-      this.startPasswordMatchCheck = !!confirm;
+    this.signupForm.get('confirmPassword')?.valueChanges.subscribe(() => {
+      this.startPasswordMatchCheck = true;
       this.checkPasswordsMatch();
     });
   }
@@ -85,27 +95,29 @@ export class SignupComponent implements OnInit {
     const password = this.signupForm.get('password')?.value;
     const confirmPassword = this.signupForm.get('confirmPassword')?.value;
     this.passwordsMatch = password === confirmPassword;
-
-    if (!password || !confirmPassword) {
-      this.startPasswordMatchCheck = false;
-    }
   }
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
-toggleConfirmPasswordVisibility(): void {
-  this.showConfirmPassword = !this.showConfirmPassword;
-}
 
-  
+  toggleConfirmPasswordVisibility(): void {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
 
   onSubmit() {
-    if (this.signupForm.invalid || !this.passwordsMatch) {
+    const isPasswordValid = this.hasLength && this.hasUpper && 
+                           this.hasLower && this.hasNumber && this.hasSpecial;
+
+    if (this.signupForm.invalid || !this.passwordsMatch || !isPasswordValid) {
+      let errorMessage = 'Veuillez corriger les erreurs avant de soumettre.';
+      if (!isPasswordValid) errorMessage = 'Le mot de passe ne répond pas à tous les critères de sécurité.';
+      if (!this.passwordsMatch) errorMessage = 'Les mots de passe ne correspondent pas.';
+
       Swal.fire({
         icon: 'warning',
         title: 'Formulaire invalide',
-        text: 'Veuillez corriger les erreurs avant de soumettre.',
+        text: errorMessage,
       });
       return;
     }
@@ -119,38 +131,42 @@ toggleConfirmPasswordVisibility(): void {
       password: formValue.password,
       role: this.selectedRole
     };
-    console.log(payload);
+
     this.authService.register(payload).subscribe({
-      next: (response) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Inscription réussie',
-          text: response.message,
-        }).then(() => this.router.navigate(['/login']));
-      },
-      error: (error) => {
-        let errorMessage = 'Une erreur est survenue lors de l\'inscription.';
-      
-        if (error.status === 0) {
-          errorMessage = 'Impossible de contacter le serveur. Vérifiez votre connexion.';
-        } else if (error.status === 409) {
-          errorMessage = 'Cet email est déjà enregistré. Veuillez en utiliser un autre.';
-        } else if (error.status === 400) {
-          errorMessage = 'Merci de remplir tous les champs obligatoires.';
-        } else if (error.status === 500) {
-          errorMessage = 'Erreur interne du serveur. Veuillez réessayer plus tard.';
-        } else if (typeof error.error === 'string') {
-          errorMessage = error.error;
-        } else if (error.error?.message) {
-          errorMessage = error.error.message;
-        }
-      
-        Swal.fire({
-          icon: 'error',
-          title: 'Échec de l\'inscription',
-          text: errorMessage,
-        });
-      }      
+      next: (response) => this.handleSuccess(response),
+      error: (error) => this.handleError(error)
     });
   }
+
+  private handleSuccess(response: any) {
+    Swal.fire({
+      icon: 'success',
+      title: 'Inscription réussie',
+      text: response.message,
+    }).then(() => this.router.navigate(['/login']));
+  }
+
+  private handleError(error: any) {
+    let errorMessage = 'Une erreur est survenue lors de l\'inscription.';
+  
+    if (error.status === 0) {
+      errorMessage = 'Impossible de contacter le serveur. Vérifiez votre connexion.';
+    } else if (error.status === 409) {
+      errorMessage = 'Cet email est déjà enregistré. Veuillez en utiliser un autre.';
+    } else if (error.status === 400) {
+      errorMessage = 'Merci de remplir tous les champs obligatoires.';
+    } else if (error.status === 500) {
+      errorMessage = 'Erreur interne du serveur. Veuillez réessayer plus tard.';
+    } else if (typeof error.error === 'string') {
+      errorMessage = error.error;
+    } else if (error.error?.message) {
+      errorMessage = error.error.message;
+    }
+  
+    Swal.fire({
+      icon: 'error',
+      title: 'Échec de l\'inscription',
+      text: errorMessage,
+    });
+  }      
 }

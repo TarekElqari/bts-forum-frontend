@@ -1,16 +1,17 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { jwtDecode } from 'jwt-decode';
 import { DocsHome } from './documents/docs-home/docs-home.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { UserProfileComponent } from '../../shared/settings/settings.component';
+import { ChatbotComponent } from "../chatbot/chatbot.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterModule, DocsHome, CommonModule, ReactiveFormsModule],
+  imports: [RouterModule, DocsHome, CommonModule, ReactiveFormsModule, UserProfileComponent, ChatbotComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -19,37 +20,30 @@ export class DashboardComponent implements OnInit {
   lastName: string = '';
   currentView: string = 'home';
   isSidebarOpen: boolean = true;
-  window = window; // Add this to make window available in template
+  isLargeScreen: boolean = true;
 
   constructor(private authService: AuthService) {
     this.firstName = this.authService.getUserInfo('firstName');
     this.lastName = this.authService.getUserInfo('lastName');
-    this.checkScreenSize();
   }
 
   ngOnInit() {
     this.checkScreenSize();
   }
-  isMobileScreen(): boolean {
-    return window.innerWidth < 768;
-  }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
+  onResize() {
     this.checkScreenSize();
   }
 
   checkScreenSize() {
-    if (window.innerWidth < 768) {
-      this.isSidebarOpen = false;
-    } else {
-      this.isSidebarOpen = true;
-    }
+    this.isLargeScreen = window.innerWidth >= 768;
+    this.isSidebarOpen = this.isLargeScreen;
   }
 
   setView(view: string) {
     this.currentView = view;
-    if (window.innerWidth < 768) {
+    if (!this.isLargeScreen) {
       this.isSidebarOpen = false;
     }
   }

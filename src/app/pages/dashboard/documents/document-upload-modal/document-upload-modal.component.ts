@@ -1,17 +1,20 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { DocumentService } from '../../../../services/document.service';
 import { AuthService } from '../../../../services/auth.service';
+import { Matiere } from '../../../../models/shared-models/Matiere.model';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-document-upload',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './document-upload-modal.component.html'
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgSelectModule],
+  templateUrl: './document-upload-modal.component.html',
 })
 export class DocumentUploadComponent {
+  @Input() matieres: Matiere[] = [];
   file?: File;
   tagsInput: string = '';
   description: string = '';
@@ -21,6 +24,30 @@ export class DocumentUploadComponent {
   customType: string = '';
   showCustomMatiere: boolean = false;
   showCustomType: boolean = false;
+  niveaux: string[] = ['TC_1ERE_ANNEE', 'TC_2EME_ANNEE'];
+  selectedNiveau: string = '';
+  filteredMatieres: Matiere[] = [];
+  selectedMatiereId: string = '';
+
+  onNiveauChange() {
+    this.filteredMatieres = this.matieres.filter(m => m.niveau === this.selectedNiveau);
+    this.selectedMatiereId = '';
+    this.customMatiere = '';
+    this.showCustomMatiere = false;
+  }
+  types: string[] = [
+    'Cours',
+    'Examen',
+    'Exercice corrigé',
+    'Rapport de stage',
+    'TD',
+    'TP',
+    'Autre',
+  ].sort((a, b) => {
+    if (a === 'Autre') return 1;
+    if (b === 'Autre') return -1;
+    return a.localeCompare(b);
+  });
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
@@ -56,7 +83,7 @@ export class DocumentUploadComponent {
     event.preventDefault();
     const target = event.currentTarget as HTMLElement;
     target.classList.remove('border-teal-600', 'bg-teal-50');
-    
+
     if (event.dataTransfer?.files.length) {
       this.file = event.dataTransfer.files[0];
     }
@@ -86,10 +113,23 @@ export class DocumentUploadComponent {
   upload(): void {
     const userId = this.authService.getUserInfo('userId');
     const tags = this.tagsInput.split(',').map(t => t.trim()).filter(t => !!t);
-    const finalMatiere = this.showCustomMatiere ? this.customMatiere : this.matiere;
     const finalType = this.showCustomType ? this.customType : this.type;
-
-    if (!this.file || !userId || !tags.length || !finalMatiere || !finalType) {
+    
+    let finalMatiere = '';
+    let niveau = '';
+  
+    if (this.showCustomMatiere) {
+      finalMatiere = this.customMatiere;
+      niveau = this.selectedNiveau;
+    } else {
+      const selectedMatiere = this.filteredMatieres.find(m => m.id === +this.selectedMatiereId);
+      if (selectedMatiere) {
+        finalMatiere = selectedMatiere.name;
+        niveau = selectedMatiere.niveau;
+      }
+    }
+  
+    if (!this.file || !userId || !tags.length || !finalMatiere || !finalType || !niveau) {
       Swal.fire({
         icon: 'error',
         title: 'Champs manquants',
@@ -98,14 +138,15 @@ export class DocumentUploadComponent {
       });
       return;
     }
-
+  
     this.documentService.uploadDocument(
       this.file, 
       tags, 
       this.description, 
       userId.toString(), 
       finalMatiere, 
-      finalType
+      finalType,
+      niveau
     ).subscribe({
       next: () => {
         Swal.fire({
@@ -126,6 +167,7 @@ export class DocumentUploadComponent {
       }
     });
   }
+  
 
   private resetForm() {
     this.file = undefined;
