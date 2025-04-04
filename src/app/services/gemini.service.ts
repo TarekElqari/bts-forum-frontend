@@ -28,10 +28,7 @@ interface GeminiRequest {
   providedIn: 'root',
 })
 export class GeminiService {
-  private API_URL =
-    'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
-  //private API_KEY = 'AIzaSyCpQcIm1S2iI31rdtSDG0erDov0QkztHY0';
-
+  private BACKEND_API_URL = 'http://localhost:8080/api/chatbot/gemini';
   constructor(private http: HttpClient) {}
 
   sendMessage(
@@ -44,23 +41,18 @@ export class GeminiService {
   ): Observable<string> {
     const fullPrompt = PROMPTS[mode] + '\n\nQuestion : ' + userMessage;
 
-    const requestBody: GeminiRequest = {
+    const requestBody = {
       contents: [{ parts: [{ text: fullPrompt }] }],
       generationConfig: {
-        temperature: temperature,
-        topP: topP,
-        maxOutputTokens: maxOutputTokens,
-        stopSequences: stopSequences,
+        temperature,
+        topP,
+        maxOutputTokens,
+        stopSequences,
       },
     };
-
-    return this.http.post<GeminiResponse>(this.API_URL, requestBody, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).pipe(
-      map((response: GeminiResponse) => { // Ajout du type GeminiResponse ici
-        const text = response.candidates?.[0]?.content?.parts?.[0]?.text;
+    return this.http.post<any>(this.BACKEND_API_URL, requestBody).pipe(
+      map((response) => {
+        const text = response?.candidates?.[0]?.content?.parts?.[0]?.text;
         return text ? this.cleanResponse(text) : '';
       })
     );
@@ -68,9 +60,9 @@ export class GeminiService {
 
   cleanResponse(text: string): string {
     return text
-      .replace(/\*\*(.*?)\*\*/g, '$1') // Remove **
-      .replace(/\*(.*?)\*/g, '$1')   // Remove *
-      .replace(/#+\s?/g, '')         // Remove Markdown titles
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/#+\s?/g, '')
       .trim();
   }
 }

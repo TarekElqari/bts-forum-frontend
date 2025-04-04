@@ -5,10 +5,6 @@ import { catchError, switchMap, throwError } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
-
-  // 👉 Exclude OpenAI API
-
-
   const authToken = authService.getToken();
 
   let request = req;
